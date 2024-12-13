@@ -14,9 +14,9 @@ Key Features:
 - Customizable: Allows for customization of retry parameters, thread pool size, and other settings to suit specific application requirements.
 Usage:
 
-1. Create an instance: If necessary (depending on your implementation), create an instance of the AsyncSplunkLogger class.
-2. Log messages: Call the log() method with the log message, severity level, source, and host information.
-3. Graceful Shutdown: Call the shutdown() method to gracefully shut down the executor service when the application is stopping.
+  1. Create an instance: If necessary (depending on your implementation), create an instance of the AsyncSplunkLogger class.
+  2. Log messages: Call the log() method with the log message, severity level, source, and host information.
+  3. Graceful Shutdown: Call the shutdown() method to gracefully shut down the executor service when the application is stopping.
 Benefits:
 
 - Improved Performance: Enhances application performance by avoiding blocking the main thread during logging operations.
