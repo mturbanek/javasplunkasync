@@ -49,7 +49,7 @@ public class AsyncSplunkLogger {
                         System.err.println("Error sending log to Splunk: " + responseCode);
                     }
                 } catch (IOException e) {
-                    System.err.println("Failed to send log to Splunk: " + e.getMessage());  //let's let you know if it's not working - can't connect to Splunk. 
+                    System.err.println("Failed to send log to Splunk: " + e.getMessage());  //let's you know if it's not working - can't connect to Splunk. 
                     if (attempt < MAX_RETRIES - 1) {
                         try {
                             Thread.sleep(retryDelay);
