@@ -1,0 +1,80 @@
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+public class AsyncSplunkLogger {
+    private static final String SPLUNK_HEC_URL = "https://your-splunk-hec-url/services/collector";
+    private static final String SPLUNK_HEC_TOKEN = "your-splunk-hec-token";
+
+    private static final int MAX_RETRIES = 3;
+    private static final int INITIAL_RETRY_DELAY = 1000; // 1 second
+
+    private static final ExecutorService executor = Executors.newFixedThreadPool(10); // Adjust thread pool size as needed
+
+    public static void log(String message, String severity, String source, String host) {
+        executor.submit(() -> {
+            int retryDelay = INITIAL_RETRY_DELAY;
+
+            for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+                try {
+                    URL url = new URL(SPLUNK_HEC_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Authorization", "Splunk " + SPLUNK_HEC_TOKEN);
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    long timestamp = System.currentTimeMillis();
+                    String jsonPayload = 
+                            "{" +
+                            "  \"event\": \"" + message + "\"," +
+                            "  \"severity\": \"" + severity + "\"," +
+                            "  \"source\": \"" + source + "\"," +
+                            "  \"host\": \"" + host + "\"," +
+                            "  \"time\": " + timestamp + 
+                            "}";
+
+                    OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+                    writer.write(jsonPayload);
+                    writer.flush();
+
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        return; // Successful, exit the loop
+                    } else {
+                        System.err.println("Error sending log to Splunk: " + responseCode);
+                    }
+                } catch (IOException e) {
+                    System.err.println("Failed to send log to Splunk: " + e.getMessage());
+                    if (attempt < MAX_RETRIES - 1) {
+                        try {
+                            Thread.sleep(retryDelay);
+                            retryDelay *= 2; // Exponential backoff
+                        } catch (InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                        }
+                    } else {
+                        // Handle final failure (e.g., log to console or fallback file)
+                        System.err.println("Failed to send log to Splunk after " + MAX_RETRIES + " retries."); 
+                    }
+                }
+            }
+        });
+    }
+
+    public static void shutdown() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException ex) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+}
