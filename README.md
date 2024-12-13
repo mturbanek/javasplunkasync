@@ -12,16 +12,19 @@ Key Features:
 - Error Handling: Includes basic error handling for network issues and provides options for fallback logging mechanisms (e.g., logging to standard output or a local file).
 - Thread Pooling: Utilizes a thread pool to efficiently manage the execution of asynchronous logging tasks.
 - Customizable: Allows for customization of retry parameters, thread pool size, and other settings to suit specific application requirements.
+
 Usage:
 
   1. Create an instance: If necessary (depending on your implementation), create an instance of the AsyncSplunkLogger class.
   2. Log messages: Call the log() method with the log message, severity level, source, and host information.
   3. Graceful Shutdown: Call the shutdown() method to gracefully shut down the executor service when the application is stopping.
+
 Benefits:
 
 - Improved Performance: Enhances application performance by avoiding blocking the main thread during logging operations.
 - Increased Throughput: Enables higher log message throughput by allowing concurrent log shipping.
 - Enhanced Responsiveness: Maintains application responsiveness even under high logging volumes.
+
 Considerations:
 
 - Thread Pool Sizing: Carefully choose the appropriate thread pool size to optimize performance and resource utilization.  Your mileage and circumstances may vary.  
