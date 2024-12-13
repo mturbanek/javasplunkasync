@@ -31,7 +31,7 @@ Considerations:
 This implementation provides a foundation for a robust and efficient asynchronous logging solution that can be further customized and extended to meet the specific needs of your application.
 
 Here's an over-simplified integration:
-
+//
 public class MyApplication {
     public static void main(String[] args) {
         // ... Load configuration (e.g., from application.properties) ...
@@ -50,3 +50,4 @@ public class MyApplication {
         AsyncSplunkLogger.shutdown(); 
     }
 }
+//
