@@ -29,3 +29,24 @@ Considerations:
 - Resource Management: Properly manage the executor service to prevent resource leaks and ensure graceful shutdown.
 
 This implementation provides a foundation for a robust and efficient asynchronous logging solution that can be further customized and extended to meet the specific needs of your application.
+
+Here's an over-simplified integration:
+
+public class MyApplication {
+    public static void main(String[] args) {
+        // ... Load configuration (e.g., from application.properties) ...
+
+        // ... Application logic ...
+        AsyncSplunkLogger.log("Application started", "INFO", "MyApp", "server1");
+
+        // ... More application logic ...
+        try {
+            // ... Some operation that might throw an exception ...
+        } catch (Exception e) {
+            AsyncSplunkLogger.log("An error occurred: " + e.getMessage(), "ERROR", "MyApp", "server1"); 
+        }
+
+        // Graceful shutdown
+        AsyncSplunkLogger.shutdown(); 
+    }
+}
