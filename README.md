@@ -20,11 +20,11 @@ Usage:
 Benefits:
 
 - Improved Performance: Enhances application performance by avoiding blocking the main thread during logging operations.
-- Increased Throughput: Enables higher log message throughput by allowing concurrent log sending.
+- Increased Throughput: Enables higher log message throughput by allowing concurrent log shipping.
 - Enhanced Responsiveness: Maintains application responsiveness even under high logging volumes.
 Considerations:
 
-- Thread Pool Sizing: Carefully choose the appropriate thread pool size to optimize performance and resource utilization.
+- Thread Pool Sizing: Carefully choose the appropriate thread pool size to optimize performance and resource utilization.  Your mileage and circumstances may vary.  
 - Error Handling: Implement robust error handling and fallback mechanisms to ensure reliable log delivery.
 - Resource Management: Properly manage the executor service to prevent resource leaks and ensure graceful shutdown.
 
