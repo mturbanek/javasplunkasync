@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AsyncSplunkLogger {
     private static final String SPLUNK_HEC_URL = "https://your-splunk-hec-url/services/collector";  //get this from your Splunk Admin
-    private static final String SPLUNK_HEC_TOKEN = "your-splunk-hec-token";  //get this from your Splunk Admin
+    private static final String SPLUNK_HEC_TOKEN = "your-splunk-hec-token";  //get this from your Splunk Admin too
 
     private static final int MAX_RETRIES = 3;
     private static final int INITIAL_RETRY_DELAY = 1000; // 1 second
