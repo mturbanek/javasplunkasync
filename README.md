@@ -3,7 +3,7 @@ An asynchronous Splunk logging driver
 
 Implementation Description:
 
-The AsyncSplunkLogger class provides asynchronous logging capabilities for sending log messages to Splunk's HTTP Event Collector (HEC). It leverages an ExecutorService to execute logging tasks in separate threads, preventing the main application thread from being blocked by I/O operations.
+The AsyncSplunkLogger class provides asynchronous logging capabilities for sending log messages to Splunk's HTTP Event Collector (HEC). It leverages an ExecutorService to execute logging tasks in separate threads, preventing the main application thread from being blocked by I/O operations.  This is a problem I've seen from other drivers. 
 
 Key Features:
 
